@@ -285,6 +285,21 @@ const interviewBlocks: ProofBlock[] = [
   },
 ]
 
+const musicTasteBlocks: ProofBlock[] = [
+  {
+    title: 'Club DNA',
+    items: ['Taja Sevelle, Michelle Weeks, Kings of Groove: vocal-house fingerprints with receipts.', 'Ben Liebrand remixes and classic-club cuts: historically informed, spiritually sweaty.'],
+  },
+  {
+    title: 'Breakbeat Pressure',
+    items: ['Un-Cut, Marcus Intalex, ST Files, Marky, Bungle, High Contrast, Aquasky, Far Too Loud.', 'Translation: basslines with job experience and drums that know where the exits are.'],
+  },
+  {
+    title: 'Range Check',
+    items: ['Orbital, GRiZ, Jockstrap, Kacey Musgraves, Sierra Hull, nugs.net live pulls.', 'The taste graph has corners. Good ones. Mildly inconvenient ones.'],
+  },
+]
+
 function BulletList({ items }: { items: string[] }) {
   return (
     <ul>
@@ -549,6 +564,31 @@ function App() {
         </div>
       </section>
 
+      <section className="band music-taste-band">
+        <div className="music-taste-header">
+          <span className="music-eyebrow">music-only browser-history read</span>
+          <h2>Good Taste, Unfortunately Documented</h2>
+          <p>
+            A narrow local-history scan found 503 music-ish hits across Chrome, Edge, and Firefox profiles. No raw URLs
+            published, because the vibe is cheeky, not surveillance.
+          </p>
+        </div>
+        <div className="music-stat-row" aria-label="Music taste evidence stats">
+          <span><strong>503</strong><small>music-ish history hits</small></span>
+          <span><strong>474</strong><small>YouTube rabbit holes</small></span>
+          <span><strong>8</strong><small>browser DBs checked</small></span>
+          <span><strong>0</strong><small>raw URLs exposed</small></span>
+        </div>
+        <div className="music-grid">
+          {musicTasteBlocks.map((block) => (
+            <article className="music-card" key={block.title}>
+              <h3>{block.title}</h3>
+              <BulletList items={block.items} />
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="band interview-band">
         <h2>Interview Talking Points</h2>
         <div className="proof-grid interview-grid">
@@ -563,7 +603,9 @@ function App() {
 
       <p className="source">
         Source basis: live public GitHub API data for selected repos, plus local Codex session_index.jsonl and session
-        metadata under .codex/sessions. Static copy carries the hiring narrative; GitHub supplies the volatile evidence.
+        metadata under .codex/sessions. Music section uses a narrow local browser-history scan filtered to music domains
+        and titles, summarized without raw URLs. Static copy carries the hiring narrative; GitHub supplies the volatile
+        evidence.
       </p>
     </main>
   )
