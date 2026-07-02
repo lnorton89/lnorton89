@@ -22,6 +22,7 @@ type ProofBlock = {
 
 type RepoEvidence = {
   name: string
+  codeType: string
   sessions: string
   owner: string
   repo: string
@@ -60,6 +61,11 @@ type RepoSnapshot = {
   latestCommit?: GitHubCommit
   languages?: string[]
   error?: string
+}
+
+type GitHubReposResponse = {
+  snapshots: RepoSnapshot[]
+  status: 'live' | 'partial' | 'fallback'
 }
 
 const hireCards: HireCard[] = [
@@ -210,6 +216,7 @@ const proofBlocks: ProofBlock[] = [
 const repos: RepoEvidence[] = [
   {
     name: 'bluetti-monitor',
+    codeType: 'Telemetry UI',
     sessions: '41 sessions',
     owner: 'lnorton89',
     repo: 'bluetti-monitor',
@@ -218,6 +225,7 @@ const repos: RepoEvidence[] = [
   },
   {
     name: 'devctl',
+    codeType: 'Dev Tooling',
     sessions: '22 sessions',
     owner: 'lnorton89',
     repo: 'devctl',
@@ -226,6 +234,7 @@ const repos: RepoEvidence[] = [
   },
   {
     name: 'juce-plugin-example',
+    codeType: 'Native Audio',
     sessions: '21 sessions',
     owner: 'lnorton89',
     repo: 'juce-plugin-example',
@@ -234,6 +243,7 @@ const repos: RepoEvidence[] = [
   },
   {
     name: 'bluetti-mqtt-node',
+    codeType: 'BLE / MQTT',
     sessions: 'public repo',
     owner: 'lnorton89',
     repo: 'bluetti-mqtt-node',
@@ -242,6 +252,7 @@ const repos: RepoEvidence[] = [
   },
   {
     name: 'reolink / rl-web-viewer',
+    codeType: 'Camera / Streaming',
     sessions: '15 sessions',
     owner: 'lnorton89',
     repo: 'rl-web-viewer',
@@ -250,6 +261,7 @@ const repos: RepoEvidence[] = [
   },
   {
     name: 'touchdesigner',
+    codeType: 'Creative Tooling',
     sessions: '9 sessions',
     owner: 'lnorton89',
     repo: 'touchdesigner',
@@ -302,13 +314,6 @@ function repoDisplayName(snapshot: RepoSnapshot) {
   return snapshot.repo?.name ?? snapshot.config.name
 }
 
-function topLanguages(languages: Record<string, number>) {
-  return Object.entries(languages)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
-    .map(([name]) => name)
-}
-
 function aggregateLanguages(snapshots: RepoSnapshot[]) {
   const counts = new Map<string, number>()
 
@@ -330,50 +335,24 @@ function useGitHubRepos(configs: RepoEvidence[]) {
   useEffect(() => {
     const controller = new AbortController()
 
-    async function fetchJson<T>(url: string): Promise<T> {
-      const response = await fetch(url, {
-        headers: { Accept: 'application/vnd.github+json' },
+    async function fetchRepoFeed(): Promise<GitHubReposResponse> {
+      const response = await fetch('/api/github-repos', {
+        headers: { Accept: 'application/json' },
         signal: controller.signal,
       })
 
       if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`)
+        throw new Error('Repo feed unavailable')
       }
 
-      return response.json() as Promise<T>
+      return response.json() as Promise<GitHubReposResponse>
     }
 
-    async function fetchSnapshot(config: RepoEvidence): Promise<RepoSnapshot> {
-      const base = `https://api.github.com/repos/${config.owner}/${config.repo}`
-
-      try {
-        const [repo, commits, languages] = await Promise.all([
-          fetchJson<GitHubRepo>(base),
-          fetchJson<GitHubCommit[]>(`${base}/commits?per_page=1`),
-          fetchJson<Record<string, number>>(`${base}/languages`),
-        ])
-
-        return {
-          config,
-          repo,
-          latestCommit: commits[0],
-          languages: topLanguages(languages),
-        }
-      } catch (error) {
-        return {
-          config,
-          error: error instanceof Error ? error.message : 'GitHub fetch failed',
-        }
-      }
-    }
-
-    Promise.all(configs.map(fetchSnapshot))
-      .then((nextSnapshots) => {
+    fetchRepoFeed()
+      .then((repoFeed) => {
         if (controller.signal.aborted) return
-
-        const liveCount = nextSnapshots.filter((snapshot) => snapshot.repo).length
-        setSnapshots(nextSnapshots)
-        setStatus(liveCount === configs.length ? 'live' : liveCount > 0 ? 'partial' : 'fallback')
+        setSnapshots(repoFeed.snapshots)
+        setStatus(repoFeed.status)
       })
       .catch(() => {
         if (controller.signal.aborted) return
@@ -515,7 +494,7 @@ function App() {
       </section>
 
       <section className="band">
-        <h2>Repo Evidence Trail <span className={`sync-state sync-${status}`}>{status === 'loading' ? 'syncing GitHub' : `${status} GitHub feed`}</span></h2>
+        <h2>Repo Evidence Trail <span className={`sync-state sync-${status}`}>{status === 'loading' ? 'syncing GitHub' : status === 'live' ? 'live GitHub feed' : 'indexed snapshot'}</span></h2>
         <div className="repo-grid">
           {snapshots.map((snapshot) => {
             const repo = snapshot.repo
@@ -525,7 +504,7 @@ function App() {
             return (
             <article className="repo" key={config.name}>
               <div className="repo-topline">
-                <span className="repo-owner">{config.owner}</span>
+                <span className="repo-owner">{config.codeType}</span>
                 <span className="tag">{config.sessions}</span>
               </div>
               <a className="repo-name" href={repo?.html_url ?? `https://github.com/${config.owner}/${config.repo}`} target="_blank" rel="noreferrer">{repoDisplayName(snapshot)}</a>
@@ -561,10 +540,9 @@ function App() {
                     ? `${latestCommit.sha.slice(0, 7)} - ${shortDate(latestCommit.commit.author?.date)}`
                     : repo
                       ? `updated ${shortDate(repo.pushed_at)}`
-                      : 'fallback'}
+                      : 'Indexed snapshot'}
                 </span>
               </div>
-              {snapshot.error ? <p className="repo-meta repo-error">GitHub fallback: {snapshot.error}</p> : null}
             </article>
             )
           })}
