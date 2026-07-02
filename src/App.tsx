@@ -549,11 +549,11 @@ function App() {
         </div>
       </section>
 
-      <section className="band">
+      <section className="band interview-band">
         <h2>Interview Talking Points</h2>
-        <div className="proof-grid">
+        <div className="proof-grid interview-grid">
           {interviewBlocks.map((block) => (
-            <article className="proof" key={block.title}>
+            <article className="proof interview-proof" key={block.title}>
               <h3>{block.title}</h3>
               <BulletList items={block.items} />
             </article>
