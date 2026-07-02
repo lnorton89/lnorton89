@@ -300,6 +300,21 @@ const musicTasteBlocks: ProofBlock[] = [
   },
 ]
 
+const openSourceProjects = [
+  { name: 'React', href: 'https://react.dev/', note: 'UI runtime' },
+  { name: 'TypeScript', href: 'https://www.typescriptlang.org/', note: 'typed glue' },
+  { name: 'Vite', href: 'https://vite.dev/', note: 'frontend build' },
+  { name: 'Node.js', href: 'https://nodejs.org/', note: 'tooling + bridges' },
+  { name: 'Netlify CLI', href: 'https://github.com/netlify/cli', note: 'deploy flow' },
+  { name: 'GitHub CLI', href: 'https://cli.github.com/', note: 'repo ops' },
+  { name: 'PowerShell', href: 'https://github.com/PowerShell/PowerShell', note: 'Windows automation' },
+  { name: 'MQTT.js', href: 'https://github.com/mqttjs/MQTT.js', note: 'device messaging' },
+  { name: 'Mosquitto', href: 'https://mosquitto.org/', note: 'MQTT broker' },
+  { name: 'CMake', href: 'https://cmake.org/', note: 'native builds' },
+  { name: 'JUCE', href: 'https://github.com/juce-framework/JUCE', note: 'audio/plugin work' },
+  { name: 'Playwright', href: 'https://playwright.dev/', note: 'browser checks' },
+]
+
 function BulletList({ items }: { items: string[] }) {
   return (
     <ul>
@@ -601,12 +616,29 @@ function App() {
         </div>
       </section>
 
-      <p className="source">
-        Source basis: live public GitHub API data for selected repos, plus local Codex session_index.jsonl and session
-        metadata under .codex/sessions. Music section uses a narrow local browser-history scan filtered to music domains
-        and titles, summarized without raw URLs. Static copy carries the hiring narrative; GitHub supplies the volatile
-        evidence.
-      </p>
+      <footer className="oss-footer">
+        <div>
+          <span className="footer-kicker">Open-source gravity well</span>
+          <h2>Stuff I Actually Use</h2>
+          <p>
+            This brief is built on the same kind of open-source infrastructure that shows up across the work:
+            frontend systems, local tooling, deploy plumbing, device messaging, native/audio builds, and browser
+            automation.
+          </p>
+        </div>
+        <div className="oss-grid" aria-label="Relevant open source projects">
+          {openSourceProjects.map((project) => (
+            <a className="oss-chip" href={project.href} key={project.name} target="_blank" rel="noreferrer">
+              <strong>{project.name}</strong>
+              <span>{project.note}</span>
+            </a>
+          ))}
+        </div>
+        <p className="source-note">
+          Source basis: live public GitHub API data for selected repos, plus local Codex session metadata. Music section
+          uses a narrow local browser-history scan filtered to music domains and titles, summarized without raw URLs.
+        </p>
+      </footer>
     </main>
   )
 }
