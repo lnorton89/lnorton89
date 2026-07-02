@@ -1,0 +1,45 @@
+:root {
+  --bg: #09090a;
+  --panel: #fff8df;
+  --panel-2: #101014;
+  --paper: #fff8df;
+  --teal: #00d8c6;
+  --gold: #ffd400;
+  --coral: #ff3f2f;
+  --green: #57ff57;
+  --blue: #00a3ff;
+  --pink: #ff4fd8;
+  --violet: #8b5cff;
+  font: 18px/145% "Google Sans", "Product Sans", Roboto, Arial, ui-sans-serif, system-ui, sans-serif;
+  color: var(--paper);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at 18px 18px, rgba(255, 255, 255, .08) 0 2px, transparent 2px 100%),
+    linear-gradient(135deg, #0a0a0b 0%, #141316 42%, #09090a 100%);
+  background-size: 28px 28px, auto;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
