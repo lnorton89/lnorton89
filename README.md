@@ -33,4 +33,4 @@ npm run build
 
 ## Deployment
 
-The app is deployed on Netlify. Pushes to `main` trigger a Netlify build through a GitHub repository webhook and Netlify build hook.
+The app is deployed on Netlify. Pushes to `main` trigger a Netlify build through a GitHub repository webhook and Netlify build hook. Netlify clones the public GitHub repo with a read-only deploy key.
