@@ -1,32 +1,36 @@
-# React + TypeScript + Vite
+# Lawrence Norton Technical Hiring Brief
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A pop-art technical hiring brief built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+Live site:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://lnorton89-hiring-brief.netlify.app
 
-## React Compiler
+Source:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+https://github.com/lnorton89/lnorton89
 
-## Expanding the Oxlint configuration
+## What It Does
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- Presents a hiring-facing technical narrative.
+- Pulls selected public GitHub repo evidence at runtime.
+- Shows live repo metadata, latest commits, language mix, and GitHub pulse stats.
+- Keeps static narrative copy as fallback when GitHub API requests fail or rate-limit.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Local Development
+
+```powershell
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Verification
+
+```powershell
+npm run lint
+npm run build
+```
+
+## Deployment
+
+The app is deployed on Netlify. Pushes to `main` trigger a Netlify build through a GitHub repository webhook and Netlify build hook.
