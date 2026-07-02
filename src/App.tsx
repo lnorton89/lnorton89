@@ -211,6 +211,10 @@ const proofBlocks: ProofBlock[] = [
     title: 'Delivery habits',
     items: ['Small targeted fixes with descriptive commits', 'Docs and health checks after implementation', 'Planning and verification loops for larger phases', 'Git hygiene: commit, push, merge, PR prep'],
   },
+  {
+    title: 'Agentic tooling',
+    items: ['Codex plus OpenCode as real working surfaces, not novelty demos', 'Custom GSD commands, agents, hooks, and project-doc context wired into terminal workflows', 'Uses AI tools like a development control plane: inspect, plan, execute, verify, then ship'],
+  },
 ]
 
 const repos: RepoEvidence[] = [
@@ -301,6 +305,7 @@ const musicTasteBlocks: ProofBlock[] = [
 ]
 
 const openSourceProjects = [
+  { name: 'OpenCode', href: 'https://opencode.ai/', note: 'agentic coding' },
   { name: 'React', href: 'https://react.dev/', note: 'UI runtime' },
   { name: 'TypeScript', href: 'https://www.typescriptlang.org/', note: 'typed glue' },
   { name: 'Vite', href: 'https://vite.dev/', note: 'frontend build' },
@@ -483,7 +488,7 @@ function App() {
 
       <section className="band">
         <h2>Engineering Range, With Evidence</h2>
-        <div className="proof-grid">
+        <div className="proof-grid range-grid">
           {proofBlocks.map((block) => (
             <article className="proof" key={block.title}>
               <h3>{block.title}</h3>
@@ -622,8 +627,8 @@ function App() {
           <h2>Stuff I Actually Use</h2>
           <p>
             This brief is built on the same kind of open-source infrastructure that shows up across the work:
-            frontend systems, local tooling, deploy plumbing, device messaging, native/audio builds, and browser
-            automation.
+            frontend systems, agentic coding, local tooling, deploy plumbing, device messaging, native/audio builds,
+            and browser automation.
           </p>
         </div>
         <div className="oss-grid" aria-label="Relevant open source projects">
@@ -635,8 +640,9 @@ function App() {
           ))}
         </div>
         <p className="source-note">
-          Source basis: live public GitHub API data for selected repos, plus local Codex session metadata. Music section
-          uses a narrow local browser-history scan filtered to music domains and titles, summarized without raw URLs.
+          Source basis: live public GitHub API data for selected repos, local Codex session metadata, and local OpenCode
+          configuration presence summarized without machine paths or secrets. Music section uses a narrow local
+          browser-history scan filtered to music domains and titles, summarized without raw URLs.
         </p>
       </footer>
     </main>

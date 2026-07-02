@@ -433,6 +433,10 @@ li {
   gap: 14px;
 }
 
+.range-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .proof:nth-child(1) {
   background: var(--gold);
 }
@@ -443,6 +447,11 @@ li {
 
 .proof:nth-child(3) {
   background: var(--pink);
+  color: #fff;
+}
+
+.range-grid .proof:nth-child(4) {
+  background: var(--blue);
   color: #fff;
 }
 
@@ -1084,7 +1093,7 @@ li {
 
 .oss-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 10px;
   margin: 18px 0;
 }
