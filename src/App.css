@@ -1338,8 +1338,8 @@ li {
 
 @media (max-width: 940px) {
   main {
-    width: min(100% - 24px, 1180px);
-    padding: 22px 0 42px;
+    width: min(100% - 20px, 1180px);
+    padding: 20px 0 40px;
   }
 
   .hero-panel,
@@ -1355,12 +1355,22 @@ li {
   }
 
   .hero-panel {
+    gap: 20px;
     padding: 22px;
     transform: none;
   }
 
+  .hero-orbit {
+    display: none;
+  }
+
+  .hero-scanline {
+    left: 0;
+    right: 0;
+  }
+
   h1 {
-    font-size: clamp(38px, 14vw, 64px);
+    font-size: clamp(36px, 12vw, 64px);
   }
 
   .music-taste-header h2 {
@@ -1384,5 +1394,230 @@ li {
 
   .oss-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  main {
+    width: min(100% - 16px, 1180px);
+    padding: 12px 0 30px;
+  }
+
+  .hero-panel,
+  .band,
+  .case,
+  .hire-card,
+  .proof,
+  .repo,
+  .music-card,
+  .oss-footer {
+    border-width: 4px;
+  }
+
+  .hero-panel {
+    margin-bottom: 22px;
+    padding: 16px;
+    box-shadow: 8px 8px 0 var(--coral);
+  }
+
+  .eyebrow,
+  .footer-kicker,
+  .music-eyebrow {
+    max-width: 100%;
+    box-shadow: 4px 4px 0 var(--green);
+    font-size: 10px;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+
+  h1 {
+    font-size: clamp(31px, 10.6vw, 44px);
+    line-height: .9;
+    text-shadow: 3px 3px 0 #fff, 6px 6px 0 rgba(0, 0, 0, .2);
+  }
+
+  .glitch-title::before {
+    transform: translate(4px, 1px);
+  }
+
+  .glitch-title::after {
+    transform: translate(-4px, 3px);
+  }
+
+  .lead {
+    margin-top: 14px;
+    font-size: 17px;
+    line-height: 1.18;
+  }
+
+  .stats {
+    gap: 9px;
+  }
+
+  .stat {
+    padding: 11px;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, .35);
+  }
+
+  .stat strong {
+    font-size: 28px;
+  }
+
+  .stat span {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  section {
+    margin-top: 14px;
+  }
+
+  .band {
+    padding: 16px;
+    box-shadow: 7px 7px 0 var(--blue);
+  }
+
+  h2 {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .hire-card,
+  .case,
+  .proof,
+  .repo,
+  .pulse-card,
+  .music-card {
+    padding: 13px;
+    box-shadow: 6px 6px 0 #000;
+  }
+
+  .case-grid,
+  .case,
+  .music-card {
+    transform: none;
+  }
+
+  .case h2 {
+    font-size: 24px;
+  }
+
+  .split {
+    gap: 10px;
+  }
+
+  .repo {
+    min-height: 0;
+  }
+
+  .repo-name {
+    font-size: 30px;
+    line-height: .95;
+    text-shadow: 2px 2px 0 rgba(255, 255, 255, .72), 5px 5px 0 rgba(0, 0, 0, .18);
+  }
+
+  .repo-description {
+    min-height: 0;
+    font-size: 14px;
+  }
+
+  .repo-stat-grid {
+    gap: 7px;
+  }
+
+  .repo-stat-grid span {
+    padding: 8px 7px;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, .24);
+  }
+
+  .commit-strip {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 9px;
+  }
+
+  .commit-label {
+    grid-row: auto;
+    width: fit-content;
+  }
+
+  .pulse-card strong,
+  .music-taste-header h2,
+  .oss-footer h2 {
+    text-shadow: 3px 3px 0 #fff, 6px 6px 0 rgba(0, 0, 0, .22);
+  }
+
+  .music-taste-header h2 {
+    font-size: 34px;
+  }
+
+  .music-taste-header p,
+  .oss-footer p {
+    font-size: 15px;
+  }
+
+  .music-stat-row strong {
+    font-size: 28px;
+  }
+
+  .music-card {
+    min-height: 0;
+  }
+
+  .music-card h3 {
+    font-size: 30px;
+  }
+
+  .oss-footer {
+    padding: 16px;
+    box-shadow: 7px 7px 0 var(--pink);
+  }
+}
+
+@media (max-width: 520px) {
+  .stats,
+  .music-stat-row,
+  .oss-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat,
+  .music-stat-row span,
+  .oss-chip {
+    box-shadow: 4px 4px 0 #000;
+  }
+
+  .music-stat-row span {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .music-stat-row small {
+    margin-top: 0;
+  }
+
+  .oss-chip {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-panel {
+    padding: 14px;
+  }
+
+  h1 {
+    font-size: clamp(29px, 10vw, 38px);
+  }
+
+  .music-taste-header h2,
+  .oss-footer h2 {
+    font-size: 31px;
+  }
+
+  .repo-stat-grid {
+    grid-template-columns: 1fr;
   }
 }
